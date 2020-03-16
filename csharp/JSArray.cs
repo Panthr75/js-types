@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace JSLib
 {
@@ -99,7 +100,17 @@ namespace JSLib
         /// Returns an iterable of key, value pairs for every entry in the array
         /// </summary>
         /// <returns></returns>
-        public IterableIterator<int, object> Entries() => null;
+        public ReadOnlyDictionary<int, T> Entries()
+        {
+            Dictionary<int, T> result = new Dictionary<int, T>();
+
+            for (int index = 0; index < this.Length; index++)
+            {
+                result[index] = this[index];
+            }
+
+            return new ReadOnlyDictionary<int, T>(result);
+        }
 
         /// <summary>
         /// Determines whether all the members of an array satisfy the specified test.
